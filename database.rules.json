@@ -1,0 +1,18 @@
+{
+    "rules": {
+        ".read": false,
+        ".write": false,
+        "logger": {
+            ".read": false,
+            ".write": "auth != null"
+        },
+        "member": {
+            ".read": "auth.uid === '86903700'",
+            ".write": "auth.uid === '86903700'",
+            "$uid": {
+                ".read": "$uid === auth.uid",
+                ".write": "$uid === auth.uid"
+            }
+        }
+    }
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Ebicon 6th 管理者画面</title>
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, width=device-width">
+<link rel="stylesheet" href="css/skyblue.min.css">
+    <script src="https://cdn.jsdelivr.net/riot/3.0/riot+compiler.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+	    <script src="tableInformation.js"></script>
+	    <script src="tableadmin.tag" type="riot/tag"></script>
+<script src="https://www.gstatic.com/firebasejs/ui/0.5.0/firebase-ui-auth.js"></script>
+<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/live/0.5/firebase-ui-auth.css" />
+	<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "",
+    authDomain: "ebiconlot.firebaseapp.com",
+    databaseURL: "https://ebiconlot.firebaseio.com",
+    storageBucket: "ebiconlot.appspot.com",
+    messagingSenderId: ""
+  };
+  firebase.initializeApp(config);
+
+	</script>
+	<style>
+		#firebaseui-auth-container ul > li { list-style: none; }
+	</style>
+  </head>
+  <body>
+    <a name="info_top_anchor"></a>
+    <div class="container">
+	<div id="firebaseui-auth-container"></div>
+	<adminInfo />
+    </div>
+  </div>
+
+    <script>
+firebase.auth().onAuthStateChanged(function(user) {
+          if (user){
+	signInInitialize(user);
+	} else {
+	      // FirebaseUI config.
+	      var uiConfig = {
+	        'signInSuccessUrl': 'https://ebiconlot.firebaseapp.com/adminEbi.html',
+		  'callbacks': {
+		    'signInSuccess': signInInitialize
+		  },
+	        'signInOptions': [
+	          firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+		  firebase.auth.GoogleAuthProvider.PROVIDER_ID
+	        ],
+	        // Terms of service url.
+	        'tosUrl': 'http://ebicon.tennana.net/',
+	      };
+
+	      var ui = new firebaseui.auth.AuthUI(firebase.auth());
+	      ui.start('#firebaseui-auth-container', uiConfig);
+	}
+});
+
+	function signInInitialize(user) {
+		if(user.providerData[0].uid != "86903700" && user.email != "ebiten.tef@gmail.com"){
+			return "./";
+		} else {
+try{
+		      var db = firebase.database();
+		      var status = db.ref("/member/");
+			var logger = db.ref("/logger/");
+			riot.mount("admininfo",{info:tableInformations,user:user,status:status,logger:logger});
+}catch(e){alert(e);}
+		      // Do not redirect.
+		      return false;
+		}
+	}
+
+//	
+    </script>
+  </body>
+</html>
