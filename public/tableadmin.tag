@@ -316,7 +316,9 @@ memberData.userName  = memberData.userName || [];
 			for(var i=0; i < selects.length;i++){
 				if(selects[i].value != "none") updateData[selects[i].id.substr(7)] = {"decision":selects[i].value};
 			}
-			opts.status.update(updateData);
+			for(var tableID in updateData){
+				opts.status.child(tableID).update(updateData[tableID]);
+			}
 		}
 
 		selectChange(e){
