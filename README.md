@@ -1,4 +1,4 @@
-#Ebicon 6th 抽選アプリケーション
+# Ebicon 6th 抽選アプリケーション
 
 ## 概要
 [Ebicon 6th](http://ebicon.tennana.net/ebicon06/)で使い捨てた、卓分け用のWEBアプリケーションです。
